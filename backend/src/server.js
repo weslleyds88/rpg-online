@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 4000;
 app.use(helmet());
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? true // Permitir todas as origens em produção (você pode restringir depois)
+    ? ['https://rpg-online-frontend.vercel.app', 'https://rpg-online.vercel.app']
     : ['http://localhost:3000', 'http://127.0.0.1:3000'],
   credentials: true
 }));
