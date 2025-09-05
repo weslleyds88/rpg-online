@@ -5,6 +5,7 @@ const { calculateLevel, getMaxHealth, getMaxMana, addExperience } = require('../
 async function createPlayer(req, res) {
   try {
     const { nome, classe } = req.body;
+    const userId = req.user.id;
     
     if (!nome || !classe) {
       return res.status(400).json({
@@ -27,8 +28,8 @@ async function createPlayer(req, res) {
     const mana = getMaxMana(nivel, classe);
     
     const result = await pool.query(
-      'INSERT INTO players (nome, classe, nivel, experiencia, vida, mana) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [nome, classe.toLowerCase(), nivel, experiencia, vida, mana]
+      'INSERT INTO players (nome, classe, nivel, experiencia, vida, mana, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+      [nome, classe.toLowerCase(), nivel, experiencia, vida, mana, userId]
     );
     
     res.status(201).json({
@@ -49,7 +50,22 @@ async function createPlayer(req, res) {
 // Listar jogadores
 async function getPlayers(req, res) {
   try {
-    const result = await pool.query('SELECT * FROM players ORDER BY created_at DESC');
+    const userId = req.user.id;
+    const userRole = req.user.role;
+    
+    let query;
+    let params;
+    
+    // Admin pode ver todos os jogadores, outros usuários veem apenas os seus
+    if (userRole === 'admin') {
+      query = 'SELECT * FROM players ORDER BY created_at DESC';
+      params = [];
+    } else {
+      query = 'SELECT * FROM players WHERE user_id = $1 ORDER BY created_at DESC';
+      params = [userId];
+    }
+    
+    const result = await pool.query(query, params);
     
     res.json({
       success: true,
@@ -70,6 +86,8 @@ async function getPlayers(req, res) {
 async function getPlayerById(req, res) {
   try {
     const { id } = req.params;
+    const userId = req.user.id;
+    const userRole = req.user.role;
     
     const playerResult = await pool.query('SELECT * FROM players WHERE id = $1', [id]);
     
@@ -81,6 +99,14 @@ async function getPlayerById(req, res) {
     }
     
     const player = playerResult.rows[0];
+    
+    // Verificar se o usuário pode acessar este jogador
+    if (userRole !== 'admin' && player.user_id !== userId) {
+      return res.status(403).json({
+        success: false,
+        message: 'Acesso negado. Você só pode acessar seus próprios jogadores.'
+      });
+    }
     
     // Buscar inventário
     const inventoryResult = await pool.query(`

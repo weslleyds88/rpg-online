@@ -7,6 +7,7 @@ require('dotenv').config();
 const { initializeDatabase } = require('./db');
 
 // Importar rotas
+const authRoutes = require('./routes/authRoutes');
 const playerRoutes = require('./routes/playerRoutes');
 const itemRoutes = require('./routes/itemRoutes');
 const questRoutes = require('./routes/questRoutes');
@@ -48,6 +49,14 @@ app.get('/docs', (req, res) => {
     message: 'RPG Online API Documentation',
     endpoints: {
       health: 'GET /health',
+      auth: {
+        login: 'POST /auth/login',
+        register: 'POST /auth/register',
+        me: 'GET /auth/me',
+        profile: 'PUT /auth/profile',
+        users: 'GET /auth/users',
+        updateRole: 'PUT /auth/users/:id/role'
+      },
       players: {
         create: 'POST /players',
         list: 'GET /players',
@@ -104,6 +113,7 @@ app.get('/docs', (req, res) => {
 });
 
 // Rotas da API
+app.use('/auth', authRoutes);
 app.use('/players', playerRoutes);
 app.use('/items', itemRoutes);
 app.use('/quests', questRoutes);

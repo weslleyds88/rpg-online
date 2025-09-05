@@ -50,8 +50,15 @@ async function createTables() {
         experiencia BIGINT DEFAULT 0,
         vida INTEGER DEFAULT 100,
         mana INTEGER DEFAULT 50,
+        user_id INTEGER,
         created_at TIMESTAMP DEFAULT NOW()
       )
+    `);
+    
+    // Adicionar coluna user_id se não existir (para compatibilidade)
+    await client.query(`
+      ALTER TABLE players 
+      ADD COLUMN IF NOT EXISTS user_id INTEGER
     `);
     
     // Tabela items
