@@ -1,0 +1,55 @@
+{
+  "name": "RPG Online Backend",
+  "description": "Backend API para sistema de RPG de mesa online",
+  "repository": "https://github.com/SEU_USUARIO/rpg-online",
+  "logo": "https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/dungeonsanddragons.svg",
+  "keywords": ["rpg", "dnd", "tabletop", "game", "api"],
+  "image": "heroku/nodejs",
+  "stack": "heroku-22",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "NODE_ENV": {
+      "description": "Environment",
+      "value": "production"
+    },
+    "DB_HOST": {
+      "description": "Database Host",
+      "value": "aws-1-sa-east-1.pooler.supabase.com"
+    },
+    "DB_PORT": {
+      "description": "Database Port",
+      "value": "5432"
+    },
+    "DB_NAME": {
+      "description": "Database Name",
+      "value": "postgres"
+    },
+    "DB_USER": {
+      "description": "Database User",
+      "value": "postgres.lqlemtihpzolkpwubbqf"
+    },
+    "DB_PASS": {
+      "description": "Database Password",
+      "value": "159357852789We*"
+    },
+    "DB_POOL_MODE": {
+      "description": "Database Pool Mode",
+      "value": "session"
+    },
+    "ADMIN_TOKEN": {
+      "description": "Admin Token",
+      "value": "troque_por_um_token_secreto"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "addons": []
+}
