@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
+import AuthPage from './pages/AuthPage';
 import Home from './pages/Home';
 import CreatePlayer from './pages/CreatePlayer';
 import PlayerList from './pages/PlayerList';
@@ -13,7 +15,36 @@ import GameRoom from './pages/GameRoom';
 import RoomList from './pages/RoomList';
 import './index.css';
 
-function App() {
+// Componente para rotas protegidas
+const ProtectedRoute = ({ children }) => {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-rpg-darker flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rpg-gold mx-auto mb-4"></div>
+          <p className="text-gray-400">Carregando...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <AuthPage />;
+  }
+
+  return children;
+};
+
+// Componente principal da aplicação
+const AppContent = () => {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <AuthPage />;
+  }
+
   return (
     <Layout>
       <Routes>
@@ -29,6 +60,14 @@ function App() {
         <Route path="/room/:id" element={<GameRoom />} />
       </Routes>
     </Layout>
+  );
+};
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

@@ -13,12 +13,19 @@ const api = axios.create({
   },
 });
 
-// Interceptor para adicionar token de admin automaticamente
+// Interceptor para adicionar token de autenticação automaticamente
 api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  
+  // Manter compatibilidade com admin token
   const adminToken = localStorage.getItem('adminToken');
   if (adminToken && config.url.includes('/admin/')) {
     config.headers.Authorization = `Bearer ${adminToken}`;
   }
+  
   return config;
 });
 

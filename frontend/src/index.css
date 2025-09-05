@@ -196,6 +196,37 @@ body {
   background: #718096;
 }
 
+/* Dropdown Menu Fix */
+.dropdown-menu {
+  @apply absolute right-0 mt-2 w-48 bg-rpg-dark border border-gray-700 rounded-lg shadow-lg z-50;
+}
+
+.dropdown-menu .dropdown-item {
+  @apply block px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors;
+}
+
+.dropdown-menu .dropdown-header {
+  @apply px-4 py-2 border-b border-gray-700;
+}
+
+.dropdown-menu .dropdown-header p {
+  @apply text-sm text-gray-300;
+}
+
+.dropdown-menu .dropdown-header .role {
+  @apply text-xs text-rpg-gold capitalize;
+}
+
+/* Loading Spinner */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .card {
