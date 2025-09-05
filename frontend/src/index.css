@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Reset e estilos base */
 * {
   margin: 0;
@@ -11,7 +15,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #1a1a1a;
+  background-color: #0f0f0f;
   color: #ffffff;
   line-height: 1.6;
 }
@@ -22,78 +26,187 @@ body {
   flex-direction: column;
 }
 
-/* Estilos do App */
-.App {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+/* Cores personalizadas do RPG */
+:root {
+  --rpg-darker: #0f0f0f;
+  --rpg-dark: #1a1a1a;
+  --rpg-blue: #3b82f6;
+  --rpg-green: #10b981;
+  --rpg-gold: #f59e0b;
+  --rpg-purple: #8b5cf6;
+  --rpg-red: #ef4444;
 }
 
-.App-header {
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  padding: 2rem;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+/* Classes utilitárias personalizadas */
+.bg-rpg-darker {
+  background-color: var(--rpg-darker);
 }
 
-.App-header h1 {
+.bg-rpg-dark {
+  background-color: var(--rpg-dark);
+}
+
+.text-rpg-gold {
+  color: var(--rpg-gold);
+}
+
+.text-rpg-blue {
+  color: var(--rpg-blue);
+}
+
+.text-rpg-green {
+  color: var(--rpg-green);
+}
+
+.text-rpg-purple {
+  color: var(--rpg-purple);
+}
+
+.text-rpg-red {
+  color: var(--rpg-red);
+}
+
+.bg-rpg-blue {
+  background-color: var(--rpg-blue);
+}
+
+.bg-rpg-green {
+  background-color: var(--rpg-green);
+}
+
+.bg-rpg-gold {
+  background-color: var(--rpg-gold);
+}
+
+.bg-rpg-purple {
+  background-color: var(--rpg-purple);
+}
+
+.bg-rpg-red {
+  background-color: var(--rpg-red);
+}
+
+.border-rpg-gold {
+  border-color: var(--rpg-gold);
+}
+
+/* Fonte fantasia */
+.font-fantasy {
   font-family: 'Cinzel', serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: #f39c12;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.App-header p {
-  font-size: 1.2rem;
-  color: #ecf0f1;
-  opacity: 0.9;
+/* Cards */
+.card {
+  @apply bg-rpg-dark border border-gray-700 rounded-lg p-6 shadow-lg;
 }
 
-.App-main {
-  flex: 1;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+/* Botões */
+.btn-primary {
+  @apply bg-rpg-blue hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
 }
 
-/* Estilos da página inicial */
-.home-page {
-  text-align: center;
-  padding: 3rem 1rem;
+.btn-secondary {
+  @apply bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
 }
 
-.home-page h2 {
-  font-family: 'Cinzel', serif;
-  font-size: 2rem;
-  color: #f39c12;
-  margin-bottom: 1rem;
+.btn-success {
+  @apply bg-rpg-green hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
 }
 
-.home-page p {
-  font-size: 1.1rem;
-  color: #bdc3c7;
-  max-width: 600px;
-  margin: 0 auto;
+.btn-danger {
+  @apply bg-rpg-red hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+.btn-warning {
+  @apply bg-rpg-gold hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+}
+
+/* Inputs */
+.input {
+  @apply w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rpg-blue focus:border-transparent;
+}
+
+/* Tabelas */
+.table {
+  @apply w-full border-collapse;
+}
+
+.table th {
+  @apply bg-gray-800 text-left px-4 py-3 text-sm font-semibold text-gray-300 border-b border-gray-700;
+}
+
+.table td {
+  @apply px-4 py-3 text-sm text-gray-300 border-b border-gray-700;
+}
+
+.table tbody tr:hover {
+  @apply bg-gray-800;
+}
+
+/* Badges */
+.badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.badge-primary {
+  @apply bg-rpg-blue text-white;
+}
+
+.badge-success {
+  @apply bg-rpg-green text-white;
+}
+
+.badge-warning {
+  @apply bg-rpg-gold text-white;
+}
+
+.badge-danger {
+  @apply bg-rpg-red text-white;
+}
+
+.badge-gray {
+  @apply bg-gray-600 text-white;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #718096;
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .App-header {
-    padding: 1.5rem 1rem;
+  .card {
+    @apply p-4;
   }
   
-  .App-header h1 {
-    font-size: 2rem;
-  }
-  
-  .App-main {
-    padding: 1rem;
-  }
-  
-  .home-page {
-    padding: 2rem 1rem;
+  .btn-primary,
+  .btn-secondary,
+  .btn-success,
+  .btn-danger,
+  .btn-warning {
+    @apply text-sm px-3 py-2;
   }
 }
