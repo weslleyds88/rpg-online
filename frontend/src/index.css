@@ -1,67 +1,99 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  body {
-    @apply bg-rpg-darker text-white font-sans;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-fantasy;
-  }
+/* Reset e estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-rpg-blue hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos do App */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.App-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #f39c12;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.App-header p {
+  font-size: 1.2rem;
+  color: #ecf0f1;
+  opacity: 0.9;
+}
+
+.App-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Estilos da página inicial */
+.home-page {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.home-page h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  color: #f39c12;
+  margin-bottom: 1rem;
+}
+
+.home-page p {
+  font-size: 1.1rem;
+  color: #bdc3c7;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .App-header {
+    padding: 1.5rem 1rem;
   }
   
-  .btn-secondary {
-    @apply bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+  .App-header h1 {
+    font-size: 2rem;
   }
   
-  .btn-success {
-    @apply bg-rpg-green hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+  .App-main {
+    padding: 1rem;
   }
   
-  .btn-danger {
-    @apply bg-rpg-red hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
-  }
-  
-  .btn-warning {
-    @apply bg-rpg-gold hover:bg-yellow-600 text-rpg-darker font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
-  }
-  
-  .card {
-    @apply bg-rpg-dark border border-gray-700 rounded-lg p-6 shadow-lg;
-  }
-  
-  .input-field {
-    @apply bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rpg-blue focus:border-transparent;
-  }
-  
-  .select-field {
-    @apply bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-rpg-blue focus:border-transparent;
-  }
-  
-  .rarity-common {
-    @apply text-gray-300;
-  }
-  
-  .rarity-uncommon {
-    @apply text-green-400;
-  }
-  
-  .rarity-rare {
-    @apply text-blue-400;
-  }
-  
-  .rarity-epic {
-    @apply text-purple-400;
-  }
-  
-  .rarity-legendary {
-    @apply text-rpg-gold;
+  .home-page {
+    padding: 2rem 1rem;
   }
 }
