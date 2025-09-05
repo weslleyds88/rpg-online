@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 const LoginForm = ({ onSwitchToRegister }) => {
   const [formData, setFormData] = useState({
     email: '',
+    username: '',
     password: ''
   });
   const [error, setError] = useState('');
@@ -22,7 +23,7 @@ const LoginForm = ({ onSwitchToRegister }) => {
     setError('');
     setLoading(true);
 
-    const result = await login(formData.email, formData.password);
+    const result = await login(formData.email || formData.username, formData.password);
     
     if (!result.success) {
       setError(result.error);
@@ -47,16 +48,30 @@ const LoginForm = ({ onSwitchToRegister }) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-2">
-            Email
+            Email ou Username
           </label>
           <input
-            type="email"
+            type="text"
             name="email"
             value={formData.email}
             onChange={handleChange}
             className="input"
-            placeholder="seu@email.com"
+            placeholder="seu@email.com ou username"
             required
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium text-gray-300 mb-2">
+            Username (para admin)
+          </label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            className="input"
+            placeholder="weslleyds88"
           />
         </div>
 

@@ -7,7 +7,11 @@ const router = express.Router();
 
 // Configuração do banco de dados
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'postgresql://postgres.lqlemtihpzolkpwubbqf:159357852789We*@aws-1-sa-east-1.pooler.supabase.com:5432/postgres',
+  host: process.env.DB_HOST || 'aws-1-sa-east-1.pooler.supabase.com',
+  port: process.env.DB_PORT || 5432,
+  database: process.env.DB_NAME || 'postgres',
+  user: process.env.DB_USER || 'postgres.lqlemtihpzolkpwubbqf',
+  password: process.env.DB_PASS || '159357852789We*',
   ssl: {
     rejectUnauthorized: false
   }
@@ -39,17 +43,17 @@ createUsersTable();
 // Rota de login
 router.post('/login', async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, username } = req.body;
 
-    if (!email || !password) {
+    if ((!email && !username) || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Email e senha são obrigatórios'
+        message: 'Email/username e senha são obrigatórios'
       });
     }
 
-    // Verificar se é o admin
-    if (email === ADMIN_USER.email && verifyAdminCredentials(ADMIN_USER.username, password)) {
+    // Verificar se é o admin (pode usar username ou email)
+    if ((username === ADMIN_USER.username || email === ADMIN_USER.email) && verifyAdminCredentials(ADMIN_USER.username, password)) {
       const token = generateToken(ADMIN_USER);
       return res.json({
         success: true,
@@ -66,8 +70,8 @@ router.post('/login', async (req, res) => {
 
     // Verificar usuários normais no banco
     const result = await pool.query(
-      'SELECT id, username, email, password, role FROM users WHERE email = $1',
-      [email]
+      'SELECT id, username, email, password, role FROM users WHERE email = $1 OR username = $2',
+      [email, username]
     );
 
     if (result.rows.length === 0) {

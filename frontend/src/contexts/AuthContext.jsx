@@ -43,9 +43,20 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // Login
-  const login = async (email, password) => {
+  const login = async (emailOrUsername, password) => {
     try {
-      const response = await api.post('/auth/login', { email, password });
+      const loginData = {
+        password
+      };
+      
+      // Se contém @, é email, senão é username
+      if (emailOrUsername.includes('@')) {
+        loginData.email = emailOrUsername;
+      } else {
+        loginData.username = emailOrUsername;
+      }
+      
+      const response = await api.post('/auth/login', loginData);
       const { token, user: userData } = response.data;
       
       localStorage.setItem('token', token);
