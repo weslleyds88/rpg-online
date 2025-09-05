@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Configuração da URL base baseada no ambiente
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://rpg-online-backend.vercel.app'  // ⚠️ IMPORTANTE: Substitua pela sua URL do backend após deploy
+  ? 'https://rpg-online-backend.vercel.app'  // URL do backend após deploy
   : 'http://localhost:4000';
 
 const api = axios.create({
