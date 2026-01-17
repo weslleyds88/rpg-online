@@ -1,7 +1,7 @@
 import CharacterPageClient from './CharacterPageClient'
 
 // Necessário para output: 'export' - rotas serão geradas dinamicamente no cliente
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return []
 }
 
