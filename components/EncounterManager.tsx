@@ -17,6 +17,7 @@ interface EncounterManagerProps {
   gameId: string
   isMaster: boolean
   players: Player[]
+  playerCharacters: Map<string, Character>
   onEncounterChange: () => void
 }
 
