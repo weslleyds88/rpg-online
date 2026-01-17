@@ -5,7 +5,7 @@
 
 import { useState, useEffect } from 'react'
 import { getUserCharacters, createCharacter, updateCharacter, deleteCharacter } from '@/services/characterService'
-import type { Character, CharacterInsert, CharacterUpdate } from '@/lib/supabase/types'
+import type { Character, CharacterInsert, CharacterInsertWithoutOwner, CharacterUpdate } from '@/lib/supabase/types'
 
 export function useCharacters() {
   const [characters, setCharacters] = useState<Character[]>([])
@@ -30,7 +30,7 @@ export function useCharacters() {
     }
   }
 
-  const addCharacter = async (character: CharacterInsert) => {
+  const addCharacter = async (character: CharacterInsert | CharacterInsertWithoutOwner) => {
     try {
       setError(null)
       const newCharacter = await createCharacter(character)

@@ -653,9 +653,12 @@ export interface Database {
 
 // Tipos auxiliares para facilitar o uso
 // Usando as views do schema public que apontam para rpg (com prefixo rpg_ para evitar conflitos)
-export type Character = Database['public']['Tables']['rpg_characters']['Row']
-export type CharacterInsert = Database['public']['Tables']['rpg_characters']['Insert']
-export type CharacterUpdate = Database['public']['Tables']['rpg_characters']['Update']
+export type Character = Database['public']['Tables']['rpg_characters']['Row'] & { max_hp?: number; xp_percentage?: number }
+export type CharacterInsert = Database['public']['Tables']['rpg_characters']['Insert'] & { max_hp?: number; xp_percentage?: number }
+export type CharacterUpdate = Database['public']['Tables']['rpg_characters']['Update'] & { max_hp?: number; xp_percentage?: number }
+
+// Tipo auxiliar para criação de personagem sem owner (owner é adicionado automaticamente pelo serviço)
+export type CharacterInsertWithoutOwner = Omit<CharacterInsert, 'owner'>
 
 export type Game = Database['public']['Tables']['rpg_games']['Row']
 export type GameInsert = Database['public']['Tables']['rpg_games']['Insert']

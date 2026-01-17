@@ -4,7 +4,7 @@
  */
 
 import { supabase } from '@/lib/supabase/client'
-import type { Character, CharacterInsert, CharacterUpdate, CharacterStats } from '@/lib/supabase/types'
+import type { Character, CharacterInsert, CharacterInsertWithoutOwner, CharacterUpdate, CharacterStats } from '@/lib/supabase/types'
 
 /**
  * Buscar todos os personagens do usuário logado
@@ -41,7 +41,7 @@ export async function getCharacterById(id: string) {
 /**
  * Criar um novo personagem
  */
-export async function createCharacter(character: CharacterInsert) {
+export async function createCharacter(character: CharacterInsert | CharacterInsertWithoutOwner) {
   // Obter o usuário atual
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('Usuário não autenticado')

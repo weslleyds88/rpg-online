@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useCharacters } from '@/hooks/useCharacters'
-import type { CharacterInsert, CharacterStats } from '@/lib/supabase/types'
+import type { CharacterInsertWithoutOwner, CharacterStats } from '@/lib/supabase/types'
 import Link from 'next/link'
 
 const CLASSES = ['Guerreiro', 'Mago', 'Ladino', 'Clérigo', 'Ranger', 'Bárbaro', 'Paladino', 'Bruxo']
@@ -44,7 +44,7 @@ export default function NewCharacterPage() {
         race: formData.race,
       }
 
-      const characterData: CharacterInsert = {
+      const characterData: CharacterInsertWithoutOwner = {
         name: formData.name,
         class: formData.class,
         stats: stats,
