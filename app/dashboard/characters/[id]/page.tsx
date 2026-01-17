@@ -6,6 +6,14 @@ import { getCharacterById, updateCharacter } from '@/services/characterService'
 import type { Character, CharacterUpdate, CharacterStats } from '@/lib/supabase/types'
 import Link from 'next/link'
 
+// Necessário para static export com rotas dinâmicas
+export function generateStaticParams() {
+  // Retorna array vazio - as páginas serão geradas dinamicamente no cliente
+  return []
+}
+
+export const dynamicParams = true
+
 export default function CharacterPage() {
   const router = useRouter()
   const params = useParams()

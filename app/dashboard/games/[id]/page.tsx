@@ -22,6 +22,14 @@ import MasterStatusPanel from '@/components/MasterStatusPanel'
 import { updatePlayerCharacter } from '@/services/playerService'
 import { deleteGame } from '@/services/gameService'
 
+// Necessário para static export com rotas dinâmicas
+export function generateStaticParams() {
+  // Retorna array vazio - as páginas serão geradas dinamicamente no cliente
+  return []
+}
+
+export const dynamicParams = true
+
 export default function GamePage() {
   const router = useRouter()
   const params = useParams()
