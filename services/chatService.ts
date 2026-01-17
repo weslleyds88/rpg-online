@@ -5,7 +5,7 @@
 
 import { supabase } from '@/lib/supabase/client'
 import { getAblyChannel } from '@/lib/ably/client'
-import type { Chat, ChatInsert } from '@/lib/supabase/types'
+import type { Chat, ChatInsert, Json } from '@/lib/supabase/types'
 
 export type LogEventType = 
   | 'action_created'
@@ -65,7 +65,7 @@ export async function logGameEvent(
     metadata: {
       type: eventType,
       ...metadata,
-    } as LogEventMetadata,
+    } as Json, // Cast para Json (LogEventMetadata é serializável)
   }
 
   const { data, error } = await supabase
