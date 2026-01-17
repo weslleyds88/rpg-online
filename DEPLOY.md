@@ -38,8 +38,8 @@ Preencha os seguintes campos:
 - **Project name**: `rpg-online` (ou o nome que preferir)
 - **Production branch**: `main` (ou `master`, dependendo do seu branch principal)
 - **Framework preset**: `Next.js`
-- **Build command**: `npm run build` (já inclui limpeza de cache automaticamente)
-- **Build output directory**: ⚠️ **DEIXE VAZIO** - O Cloudflare Pages detecta automaticamente o Next.js e usa a configuração correta
+- **Build command**: `npm run build` (já inclui build do adaptador e limpeza de cache automaticamente)
+- **Build output directory**: `.vercel/output/static` ⚠️ **IMPORTANTE**: Com `@cloudflare/next-on-pages`, o output é gerado em `.vercel/output/static`
 - **Framework preset**: `Next.js` (deixe o Cloudflare detectar automaticamente)
 
 ⚠️ **IMPORTANTE**: O script de build já remove automaticamente o cache do webpack (`.next/cache`) após o build para evitar arquivos maiores que 25MB, que é o limite do Cloudflare Pages.
@@ -102,9 +102,11 @@ Após o deploy, verifique:
 
 ### Erro 404 em rotas
 
-- O Next.js App Router deve funcionar automaticamente
+- **Se estiver usando `@cloudflare/next-on-pages`**: Verifique se o diretório de saída está configurado como `.vercel/output/static` no Cloudflare Pages
+- **Se o erro persistir**: Verifique se o adaptador `@cloudflare/next-on-pages` foi executado corretamente durante o build (verifique os logs)
 - Verifique se o `next.config.js` está correto
 - Certifique-se de que o build output está correto
+- **Importante**: O `@cloudflare/next-on-pages` pode não funcionar no Windows localmente, mas funciona no Cloudflare Pages (Linux)
 
 ### Erro de CORS no Supabase
 
