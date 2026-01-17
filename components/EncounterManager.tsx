@@ -69,7 +69,7 @@ export default function EncounterManager({ gameId, isMaster, players, playerChar
       }
       
       // Adicionar players selecionados
-      for (const playerId of selectedPlayers) {
+      for (const playerId of Array.from(selectedPlayers)) {
         try {
           await addParticipantToEncounter(newEncounter.id, 'player', playerId)
         } catch (err) {
@@ -79,7 +79,7 @@ export default function EncounterManager({ gameId, isMaster, players, playerChar
       }
 
       // Adicionar NPCs selecionados
-      for (const npcId of selectedNPCs) {
+      for (const npcId of Array.from(selectedNPCs)) {
         try {
           await addParticipantToEncounter(newEncounter.id, 'npc', npcId)
         } catch (err) {
