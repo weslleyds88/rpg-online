@@ -19,7 +19,7 @@
     "react-hook-form": "^7.49.2"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.11.5",
+    "@cloudflare/next-on-pages": "1.13.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
