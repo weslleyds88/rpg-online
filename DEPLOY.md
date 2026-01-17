@@ -39,7 +39,7 @@ Preencha os seguintes campos:
 - **Production branch**: `main` (ou `master`, dependendo do seu branch principal)
 - **Framework preset**: `Next.js`
 - **Build command**: `npm run build`
-- **Build output directory**: `out` ⚠️ **IMPORTANTE**: Com `output: 'export'` no `next.config.js`, o Next.js gera os arquivos estáticos no diretório `out`
+- **Build output directory**: `.vercel/output/static` ⚠️ **IMPORTANTE**: Com `@cloudflare/next-on-pages`, o output é gerado em `.vercel/output/static`
 - **Root directory**: `/` (deixe vazio ou `/`)
 - **Deploy command**: ⚠️ **DEIXE VAZIO** - O deploy é automático após o build. Não configure `npx wrangler deploy` (isso é para Workers, não Pages)
 
