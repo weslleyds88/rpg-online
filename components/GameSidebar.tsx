@@ -10,12 +10,12 @@ import PlayerColorPicker from './PlayerColorPicker'
 import EncounterManager from './EncounterManager'
 import InitiativeTracker from './InitiativeTracker'
 import StatusManager from './StatusManager'
-import type { Game, Player, Map, Character, Message } from '@/lib/supabase/types'
+import type { Game, Player, Map, Character, Chat } from '@/lib/supabase/types'
 
 interface GameSidebarProps {
   gameId: string
   isMaster: boolean
-  messages: Message[]
+  messages: Chat[]
   chatLoading: boolean
   players: Player[]
   maps: Map[]
