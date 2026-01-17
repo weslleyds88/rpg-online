@@ -38,7 +38,7 @@ Preencha os seguintes campos:
 - **Project name**: `rpg-online` (ou o nome que preferir)
 - **Production branch**: `main` (ou `master`, dependendo do seu branch principal)
 - **Framework preset**: `Next.js`
-- **Build command**: `npm run build` (já inclui build do adaptador e limpeza de cache automaticamente)
+- **Build command**: `npm run build:pages` (executa build do Next.js, adaptador Cloudflare e limpeza de cache)
 - **Build output directory**: `.vercel/output/static` ⚠️ **IMPORTANTE**: Com `@cloudflare/next-on-pages`, o output é gerado em `.vercel/output/static`
 - **Framework preset**: `Next.js` (deixe o Cloudflare detectar automaticamente)
 
