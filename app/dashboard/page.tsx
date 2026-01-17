@@ -145,7 +145,7 @@ export default function DashboardPage() {
                     <div className="flex items-center text-gray-400">
                       <span className="font-medium mr-2">Raça:</span>
                       <span className="text-white">
-                        {typeof character.stats === 'object' && !Array.isArray(character.stats) && character.stats.race
+                        {character.stats && typeof character.stats === 'object' && !Array.isArray(character.stats) && character.stats.race
                           ? String(character.stats.race)
                           : 'Sem raça'}
                       </span>
