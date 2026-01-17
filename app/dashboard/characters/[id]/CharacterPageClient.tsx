@@ -52,7 +52,10 @@ export default function CharacterPageClient() {
 
   // Helper para obter stats do personagem
   const getStats = (): CharacterStats => {
-    return character?.stats || {
+    if (character?.stats && typeof character.stats === 'object' && !Array.isArray(character.stats)) {
+      return character.stats as CharacterStats
+    }
+    return {
       race: '',
       class: '',
       strength: 10,
