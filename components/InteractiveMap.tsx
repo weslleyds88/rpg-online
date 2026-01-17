@@ -157,7 +157,7 @@ export default function InteractiveMap({ gameId, isMaster, myCharacter }: Intera
     }
   }
 
-  const loadMapImage = async (map: Map) => {
+  const loadMapImage = async (map: GameMap) => {
     if (!map.filename) return
 
     try {
