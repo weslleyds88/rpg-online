@@ -1,0 +1,4 @@
+# Cloudflare Pages configuration
+# This file configures compatibility flags for @cloudflare/next-on-pages
+
+compatibility_flags = ["nodejs_compat"]
