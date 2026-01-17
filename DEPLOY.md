@@ -38,9 +38,11 @@ Preencha os seguintes campos:
 - **Project name**: `rpg-online` (ou o nome que preferir)
 - **Production branch**: `main` (ou `master`, dependendo do seu branch principal)
 - **Framework preset**: `Next.js`
-- **Build command**: `npm run build`
-- **Build output directory**: ⚠️ **DEIXE VAZIO** ou use `.next` - O Cloudflare Pages detecta automaticamente o Next.js e usa a configuração correta
+- **Build command**: `npm run build` (já inclui limpeza de cache automaticamente)
+- **Build output directory**: ⚠️ **DEIXE VAZIO** - O Cloudflare Pages detecta automaticamente o Next.js e usa a configuração correta
 - **Framework preset**: `Next.js` (deixe o Cloudflare detectar automaticamente)
+
+⚠️ **IMPORTANTE**: O script de build já remove automaticamente o cache do webpack (`.next/cache`) após o build para evitar arquivos maiores que 25MB, que é o limite do Cloudflare Pages.
 - **Root directory**: `/` (deixe vazio ou `/`)
 - **Deploy command**: ⚠️ **DEIXE VAZIO** - O deploy é automático após o build. Não configure `npx wrangler deploy` (isso é para Workers, não Pages)
 
