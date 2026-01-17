@@ -125,7 +125,7 @@ export async function getEncounterParticipants(encounterId: string) {
     .from('rpg_initiative_entries')
     .select('*')
     .eq('encounter_id', encounterId)
-    .order('turn_order', { ascending: true, nullsLast: true })
+    .order('turn_order', { ascending: true, nullsFirst: false })
 
   if (error) throw error
   return data as InitiativeEntry[]
