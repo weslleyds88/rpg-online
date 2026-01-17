@@ -3,11 +3,11 @@
 import { useState } from 'react'
 import { uploadMap, deleteMap, getMapUrl } from '@/services/mapService'
 import { getAblyChannel } from '@/lib/ably/client'
-import type { Map } from '@/lib/supabase/types'
+import type { Map as GameMap } from '@/lib/supabase/types'
 
 interface MapUploadProps {
   gameId: string
-  maps: Map[]
+  maps: GameMap[]
   onMapsChange: () => void
   isMaster: boolean
 }

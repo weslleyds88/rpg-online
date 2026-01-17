@@ -54,7 +54,7 @@ export default function InteractiveMap({ gameId, isMaster, myCharacter }: Intera
       setSelectedNPC(customEvent.detail || null)
     }
     const handleMapSelected = async (e: Event) => {
-      const customEvent = e as CustomEvent<Map>
+      const customEvent = e as CustomEvent<GameMap>
       console.log('Evento map-selected recebido:', customEvent.detail)
       if (customEvent.detail) {
         const mapId = customEvent.detail.id

@@ -3,7 +3,7 @@
  */
 
 import { supabase } from '@/lib/supabase/client'
-import type { Map, MapInsert } from '@/lib/supabase/types'
+import type { Map as GameMap, MapInsert } from '@/lib/supabase/types'
 
 const STORAGE_BUCKET = 'rpg-maps'
 
@@ -18,7 +18,7 @@ export async function getGameMaps(gameId: string) {
     .order('created_at', { ascending: false })
 
   if (error) throw error
-  return data as Map[]
+  return data as GameMap[]
 }
 
 /**
@@ -101,7 +101,7 @@ export async function uploadMap(
     console.warn('Erro ao criar log de mapa:', err)
   }
 
-  return mapRecord as Map
+  return mapRecord as GameMap
 }
 
 /**
