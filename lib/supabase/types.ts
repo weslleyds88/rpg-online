@@ -680,27 +680,6 @@ export type Action = Database['public']['Tables']['rpg_actions']['Row']
 export type ActionInsert = Database['public']['Tables']['rpg_actions']['Insert']
 export type ActionUpdate = Database['public']['Tables']['rpg_actions']['Update']
 
-// Tipos para as outras tabelas do schema rpg (quando necessário)
-export type Game = Database['rpg']['Tables']['games']['Row']
-export type GameInsert = Database['rpg']['Tables']['games']['Insert']
-export type GameUpdate = Database['rpg']['Tables']['games']['Update']
-
-export type Player = Database['rpg']['Tables']['players']['Row']
-export type PlayerInsert = Database['rpg']['Tables']['players']['Insert']
-export type PlayerUpdate = Database['rpg']['Tables']['players']['Update']
-
-export type Map = Database['rpg']['Tables']['maps']['Row']
-export type MapInsert = Database['rpg']['Tables']['maps']['Insert']
-export type MapUpdate = Database['rpg']['Tables']['maps']['Update']
-
-export type Action = Database['rpg']['Tables']['actions']['Row']
-export type ActionInsert = Database['rpg']['Tables']['actions']['Insert']
-export type ActionUpdate = Database['rpg']['Tables']['actions']['Update']
-
-export type Chat = Database['rpg']['Tables']['chat']['Row']
-export type ChatInsert = Database['rpg']['Tables']['chat']['Insert']
-export type ChatUpdate = Database['rpg']['Tables']['chat']['Update']
-
 // Tipos auxiliares para stats (atributos do personagem)
 export interface CharacterStats {
   strength?: number
