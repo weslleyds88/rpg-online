@@ -7,7 +7,7 @@ import { getCharacterById } from '@/services/characterService'
 import { getGameNPCs, updateNPCPosition } from '@/services/npcService'
 import { getAblyChannel } from '@/lib/ably/client'
 import { useAuth } from '@/hooks/useAuth'
-import type { Map, Player, Character, NPC } from '@/lib/supabase/types'
+import type { Map as GameMap, Player, Character, NPC } from '@/lib/supabase/types'
 import { supabase } from '@/lib/supabase/client'
 import { MapTransformContext } from './MapContainer'
 
@@ -22,8 +22,8 @@ const GRID_SIZE = 50 // Tamanho de cada célula da grade em pixels
 export default function InteractiveMap({ gameId, isMaster, myCharacter }: InteractiveMapProps) {
   const { user } = useAuth()
   const mapTransform = useContext(MapTransformContext)
-  const [maps, setMaps] = useState<Map[]>([])
-  const [selectedMap, setSelectedMap] = useState<Map | null>(null)
+  const [maps, setMaps] = useState<GameMap[]>([])
+  const [selectedMap, setSelectedMap] = useState<GameMap | null>(null)
   const [mapImageUrl, setMapImageUrl] = useState<string | null>(null)
   const [players, setPlayers] = useState<Player[]>([])
   const [playerCharacters, setPlayerCharacters] = useState<Map<string, Character>>(new Map())
