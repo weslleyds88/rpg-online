@@ -20,6 +20,8 @@ export type LogEventType =
   | 'master_changed'
   | 'combat_xp'
   | 'master_xp_grant'
+  | 'combat_damage'
+  | 'combat_healing'
 
 export interface LogEventMetadata {
   type: LogEventType
