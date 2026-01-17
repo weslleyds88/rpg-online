@@ -41,6 +41,7 @@ Preencha os seguintes campos:
 - **Build command**: `npm run build`
 - **Build output directory**: `.next`
 - **Root directory**: `/` (deixe vazio ou `/`)
+- **Deploy command**: ⚠️ **DEIXE VAZIO** - O deploy é automático após o build. Não configure `npx wrangler deploy` (isso é para Workers, não Pages)
 
 ### 4. Configurar Variáveis de Ambiente
 
