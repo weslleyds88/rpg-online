@@ -100,7 +100,7 @@ export default function NPCManager({ gameId, isMaster, onNPCsChange, onSelectNPC
     setEditingNPC(npc)
     setFormData({
       name: npc.name,
-      type: npc.type,
+      type: npc.type as 'npc' | 'adversary' | 'monster' | 'mob',
       class: npc.class || '',
       level: npc.level,
       hp: npc.hp,
