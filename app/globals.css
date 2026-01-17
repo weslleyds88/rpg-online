@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 249, 250, 251;
+    --background-end-rgb: 255, 255, 255;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+}
+
+/* Garantir que inputs tenham texto visível (apenas para inputs claros) */
+input[type="text"]:not(.bg-gray-900):not([style*="color"]),
+input[type="email"]:not(.bg-gray-900):not([style*="color"]),
+input[type="password"]:not(.bg-gray-900):not([style*="color"]),
+input[type="number"]:not(.bg-gray-900):not([style*="color"]),
+textarea:not(.bg-gray-900):not([style*="color"]) {
+  color: #111827 !important;
+}
+
+input[type="text"]:not(.bg-gray-900):not([style*="color"]):focus,
+input[type="email"]:not(.bg-gray-900):not([style*="color"]):focus,
+input[type="password"]:not(.bg-gray-900):not([style*="color"]):focus,
+input[type="number"]:not(.bg-gray-900):not([style*="color"]):focus,
+textarea:not(.bg-gray-900):not([style*="color"]):focus {
+  color: #111827 !important;
+}
+
+/* Para inputs com fundo escuro, garantir texto branco */
+input.bg-gray-900,
+input.bg-gray-800,
+select.bg-gray-900,
+select.bg-gray-800 {
+  color: #ffffff !important;
+}
+
+input.bg-gray-900::placeholder,
+input.bg-gray-800::placeholder {
+  color: #9ca3af !important;
+}
