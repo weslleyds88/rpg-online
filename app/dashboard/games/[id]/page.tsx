@@ -8,7 +8,7 @@ import { getGameMaps } from '@/services/mapService'
 import { getCharacterById } from '@/services/characterService'
 import { useChat } from '@/hooks/useChat'
 import { useAuth } from '@/hooks/useAuth'
-import type { Game, Player, Map, Character } from '@/lib/supabase/types'
+import type { Game, Player, Map as GameMap, Character } from '@/lib/supabase/types'
 import Link from 'next/link'
 import Notifications from '@/components/Notifications'
 import CharacterSelector from '@/components/CharacterSelector'
@@ -31,7 +31,7 @@ export default function GamePage() {
 
   const [game, setGame] = useState<Game | null>(null)
   const [players, setPlayers] = useState<Player[]>([])
-  const [maps, setMaps] = useState<Map[]>([])
+  const [maps, setMaps] = useState<GameMap[]>([])
   const [myCharacter, setMyCharacter] = useState<Character | null>(null)
   const [playerCharacters, setPlayerCharacters] = useState<Map<string, Character>>(new Map())
   const [loading, setLoading] = useState(true)
