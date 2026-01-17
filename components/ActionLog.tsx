@@ -1,16 +1,10 @@
 'use client'
 
 import { useEffect, useRef, memo } from 'react'
-
-interface Message {
-  id: string
-  message: string
-  created_at: string
-  metadata?: any
-}
+import type { Chat } from '@/lib/supabase/types'
 
 interface ActionLogProps {
-  messages: Message[]
+  messages: Chat[]
   loading: boolean
 }
 
@@ -79,7 +73,7 @@ function ActionLog({ messages, loading }: ActionLogProps) {
                   getEventStyle(eventType)
                 } ${isRecent ? 'ring-1 ring-white/20' : ''}`}
               >
-                <p className="text-white leading-relaxed">{log.message}</p>
+                <p className="text-white leading-relaxed">{log.message || 'Mensagem vazia'}</p>
                 <p className="text-gray-400 mt-1 text-[10px]">
                   {new Date(log.created_at).toLocaleString('pt-BR', {
                     hour: '2-digit',
