@@ -10,7 +10,7 @@ import PlayerColorPicker from './PlayerColorPicker'
 import EncounterManager from './EncounterManager'
 import InitiativeTracker from './InitiativeTracker'
 import StatusManager from './StatusManager'
-import type { Game, Player, Map, Character, Chat } from '@/lib/supabase/types'
+import type { Game, Player, Map as GameMap, Character, Chat } from '@/lib/supabase/types'
 
 interface GameSidebarProps {
   gameId: string
@@ -18,7 +18,7 @@ interface GameSidebarProps {
   messages: Chat[]
   chatLoading: boolean
   players: Player[]
-  maps: Map[]
+  maps: GameMap[]
   myCharacter: Character | null
   playerCharacters: Map<string, Character>
   onMapsChange: () => void
