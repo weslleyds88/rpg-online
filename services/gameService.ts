@@ -160,6 +160,7 @@ export async function createGame(game: Omit<GameInsert, 'master'>) {
           game_id: retryGame.id,
           user_id: user.id,
           role: 'master',
+          color: '#3b82f6', // Cor padrão (azul)
         })
 
       if (playerError) throw playerError
@@ -192,6 +193,7 @@ export async function createGame(game: Omit<GameInsert, 'master'>) {
       game_id: newGame.id,
       user_id: user.id,
       role: 'master',
+      color: '#3b82f6', // Cor padrão (azul)
     })
 
   if (playerError) throw playerError

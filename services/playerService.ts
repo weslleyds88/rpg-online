@@ -35,6 +35,7 @@ export async function addPlayerToGame(
       user_id: userId,
       role,
       character_id: characterId || null,
+      color: '#3b82f6', // Cor padrão (azul)
     })
     .select()
     .single()
