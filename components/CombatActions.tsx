@@ -46,9 +46,11 @@ export default function CombatActions({ gameId, isMaster, players, playerCharact
     // Listener para confirmação do mestre
     const handleHitConfirmed = (confirmation: { actionId: string; hit: boolean }) => {
       const { actionId, hit } = confirmation
+      console.log('📥 Confirmação recebida:', { actionId, hit, pendingActionId })
+      
       // Verificar se é a ação pendente atual
       if (pendingActionId === actionId) {
-        console.log('✅ Confirmação recebida para ação:', actionId, 'Hit:', hit)
+        console.log('✅ Confirmação válida para ação:', actionId, 'Hit:', hit)
         setHitConfirmed(hit)
         if (!hit) {
           // Se errou, resetar tudo
@@ -58,6 +60,8 @@ export default function CombatActions({ gameId, isMaster, players, playerCharact
           setManualHealing('')
           setPendingActionId(null)
         }
+      } else {
+        console.log('⚠️ Confirmação ignorada: actionId não corresponde', { received: actionId, expected: pendingActionId })
       }
     }
 

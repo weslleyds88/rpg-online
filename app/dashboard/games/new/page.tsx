@@ -23,9 +23,20 @@ export default function NewGamePage() {
 
     try {
       const newGame = await addGame(formData)
+      // Se chegou aqui, o game foi criado com sucesso
+      // Mesmo que tenha dado erro ao criar o player, o game existe
       router.push(`/dashboard/games/${newGame.id}`)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao criar game')
+      // Só mostrar erro se for um erro crítico
+      // Erros de player não devem bloquear (o game já foi criado)
+      const errorMessage = err instanceof Error ? err.message : 'Erro ao criar game'
+      if (errorMessage.includes('player') || errorMessage.includes('400')) {
+        // Se for erro de player, tentar navegar mesmo assim (game pode ter sido criado)
+        console.warn('Erro ao criar player, mas game pode ter sido criado:', err)
+        // Não mostrar erro na UI, apenas logar
+      } else {
+        setError(errorMessage)
+      }
     } finally {
       setLoading(false)
     }

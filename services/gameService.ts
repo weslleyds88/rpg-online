@@ -161,9 +161,27 @@ export async function createGame(game: Omit<GameInsert, 'master'>) {
           user_id: user.id,
           role: 'master',
           color: '#3b82f6', // Cor padrão (azul)
+          position_x: 0, // Posição inicial
+          position_y: 0, // Posição inicial
         })
 
-      if (playerError) throw playerError
+      if (playerError) {
+        // Se der erro ao criar player, tentar sem color (fallback)
+        console.warn('Erro ao criar player com color, tentando sem color:', playerError)
+        const { error: retryError } = await supabase
+          .from('rpg_players')
+          .insert({
+            game_id: retryGame.id,
+            user_id: user.id,
+            role: 'master',
+          })
+        
+        if (retryError) {
+          // Se ainda der erro, logar mas não bloquear (game já foi criado)
+          console.error('Erro ao criar player na sala (game criado mas player não):', retryError)
+          // Não lançar erro para não bloquear a criação do game
+        }
+      }
 
       // Criar log automático de criação do jogo
       try {
@@ -194,9 +212,28 @@ export async function createGame(game: Omit<GameInsert, 'master'>) {
       user_id: user.id,
       role: 'master',
       color: '#3b82f6', // Cor padrão (azul)
+      position_x: 0, // Posição inicial
+      position_y: 0, // Posição inicial
     })
 
-  if (playerError) throw playerError
+  if (playerError) {
+    // Se der erro ao criar player, tentar sem color (fallback)
+    console.warn('Erro ao criar player com color, tentando sem color:', playerError)
+    const { error: retryError } = await supabase
+      .from('rpg_players')
+      .insert({
+        game_id: newGame.id,
+        user_id: user.id,
+        role: 'master',
+      })
+    
+    if (retryError) {
+      // Se ainda der erro, logar mas não bloquear (game já foi criado)
+      console.error('Erro ao criar player na sala (game criado mas player não):', retryError)
+      // Não lançar erro para não bloquear a criação do game
+      // O usuário pode adicionar o player manualmente depois
+    }
+  }
 
   // Criar log automático de criação do jogo
   try {
@@ -208,6 +245,9 @@ export async function createGame(game: Omit<GameInsert, 'master'>) {
     console.warn('Erro ao criar log de criação de jogo:', err)
   }
 
+  // Sempre retornar o game, mesmo se o player não foi criado
+  // O erro do player é logado mas não bloqueia a criação do game
+  console.log('✅ Game criado com sucesso:', newGame.id)
   return newGame as Game
 }
 

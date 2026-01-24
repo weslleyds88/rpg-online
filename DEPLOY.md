@@ -46,7 +46,18 @@ Preencha os seguintes campos:
 - **Root directory**: `/` (deixe vazio ou `/`)
 - **Deploy command**: ⚠️ **DEIXE VAZIO** - O deploy é automático após o build. Não configure `npx wrangler deploy` (isso é para Workers, não Pages)
 
-### 4. Configurar Variáveis de Ambiente
+### 4. Configurar Compatibility Flags
+
+⚠️ **IMPORTANTE**: Para que o `@cloudflare/next-on-pages` funcione corretamente, você precisa adicionar a flag `nodejs_compat`:
+
+1. No projeto do Cloudflare Pages, vá em **Settings**
+2. Role até a seção **Compatibility Flags**
+3. Clique em **Add compatibility flag**
+4. Selecione `nodejs_compat`
+5. Certifique-se de que está habilitada para **Production** e **Preview**
+6. Clique em **Save**
+
+### 5. Configurar Variáveis de Ambiente
 
 Na seção **Environment variables**, adicione:
 
@@ -64,13 +75,13 @@ O Cloudflare Pages detecta automaticamente a versão do Node.js através do arqu
 
 Se necessário, você pode especificar manualmente nas configurações do projeto.
 
-### 6. Deploy
+### 7. Deploy
 
 1. Clique em **Save and Deploy**
 2. Aguarde o build completar (geralmente 2-5 minutos)
 3. Após o deploy, você receberá uma URL automática: `https://rpg-online.pages.dev`
 
-### 7. Configurar Domínio Customizado (Opcional)
+### 8. Configurar Domínio Customizado (Opcional)
 
 1. No projeto do Cloudflare Pages, vá em **Custom domains**
 2. Clique em **Set up a custom domain**

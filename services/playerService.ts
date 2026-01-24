@@ -36,6 +36,8 @@ export async function addPlayerToGame(
       role,
       character_id: characterId || null,
       color: '#3b82f6', // Cor padrão (azul)
+      position_x: 0, // Posição inicial no mapa
+      position_y: 0, // Posição inicial no mapa
     })
     .select()
     .single()

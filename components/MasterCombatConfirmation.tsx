@@ -96,18 +96,25 @@ export default function MasterCombatConfirmation({
   }
 
   const handleConfirmHit = async (actionId: string, hit: boolean) => {
+    console.log('🎯 handleConfirmHit chamado:', { actionId, hit })
+    
     const action = pendingActions.find(a => a.id === actionId)
-    if (!action) return
+    if (!action) {
+      console.warn('⚠️ Ação não encontrada:', actionId)
+      return
+    }
 
     // Remover da lista de pendentes
     setPendingActions(prev => prev.filter(a => a.id !== actionId))
 
     // Enviar confirmação via Ably
+    console.log('📤 Enviando confirmação via Ably:', { actionId, hit, gameId })
     const success = sendCombatHitConfirmation(gameId, { actionId, hit, gameId })
     
     if (success) {
-      console.log('✅ Confirmação enviada via Ably')
+      console.log('✅ Confirmação enviada via Ably com sucesso')
     } else {
+      console.warn('⚠️ Falha ao enviar via Ably, usando fallback DOM')
       // Fallback: evento DOM
       window.dispatchEvent(new CustomEvent('combat-hit-confirmed', {
         detail: { actionId, hit }

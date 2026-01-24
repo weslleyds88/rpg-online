@@ -84,18 +84,22 @@ export function subscribeToCombatRequests(
  */
 export function confirmCombatHit(gameId: string, confirmation: CombatHitConfirmation) {
   try {
-    const channel = getAblyChannel(`game:${gameId}:combat`)
+    const channelName = `game:${gameId}:combat`
+    console.log('🔔 confirmCombatHit: tentando publicar no canal', channelName)
+    
+    const channel = getAblyChannel(channelName)
     
     if (!channel) {
-      console.warn('Canal Ably não disponível para combate')
+      console.warn('❌ Canal Ably não disponível para combate:', channelName)
       return false
     }
     
+    console.log('📤 Publicando combat_hit_confirmed:', confirmation)
     channel.publish('combat_hit_confirmed', confirmation)
-    console.log('Confirmação de combate enviada via Ably:', confirmation)
+    console.log('✅ Confirmação de combate enviada via Ably com sucesso')
     return true
   } catch (err) {
-    console.error('Erro ao enviar confirmação de combate via Ably:', err)
+    console.error('❌ Erro ao enviar confirmação de combate via Ably:', err)
     return false
   }
 }
@@ -109,29 +113,35 @@ export function subscribeToCombatConfirmations(
   callback: (confirmation: CombatHitConfirmation) => void
 ) {
   try {
-    const channel = getAblyChannel(`game:${gameId}:combat`)
+    const channelName = `game:${gameId}:combat`
+    console.log('🔔 subscribeToCombatConfirmations: inscrevendo no canal', channelName)
+    
+    const channel = getAblyChannel(channelName)
     
     if (!channel) {
-      console.warn('Canal Ably não disponível para combate')
+      console.warn('❌ Canal Ably não disponível para confirmações de combate:', channelName)
       return () => {}
     }
     
     // Escutar confirmações
     channel.subscribe('combat_hit_confirmed', (message) => {
       const confirmation = message.data as CombatHitConfirmation
-      console.log('Confirmação de combate recebida via Ably:', confirmation)
+      console.log('📥 Confirmação de combate recebida via Ably:', confirmation)
       callback(confirmation)
     })
+    
+    console.log('✅ Inscrito com sucesso em combat_hit_confirmed')
     
     return () => {
       try {
         channel.unsubscribe('combat_hit_confirmed')
+        console.log('🔕 Desinscrito de combat_hit_confirmed')
       } catch (err) {
         console.warn('Erro ao fazer unsubscribe do canal de combate:', err)
       }
     }
   } catch (err) {
-    console.warn('Erro ao criar subscription de confirmações de combate no Ably:', err)
+    console.warn('❌ Erro ao criar subscription de confirmações de combate no Ably:', err)
     return () => {}
   }
 }
