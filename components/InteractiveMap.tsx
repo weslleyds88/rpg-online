@@ -33,6 +33,7 @@ export default function InteractiveMap({ gameId, isMaster, myCharacter }: Intera
   const [draggingPlayer, setDraggingPlayer] = useState<{ player: Player; offsetX: number; offsetY: number } | null>(null)
   const [mapScale, setMapScale] = useState(1)
   const [mapDrawPos, setMapDrawPos] = useState({ x: 0, y: 0 })
+  const [clickStartPos, setClickStartPos] = useState<{ x: number; y: number } | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const imageCacheRef = useRef<HTMLImageElement | null>(null)
@@ -323,6 +324,9 @@ export default function InteractiveMap({ gameId, isMaster, myCharacter }: Intera
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (!selectedMap || !user) return
 
+    // Salvar posição inicial do clique para detectar se foi um clique simples ou drag
+    setClickStartPos({ x: e.clientX, y: e.clientY })
+
     // Mestre pode arrastar NPCs
     if (isMaster) {
       const clickedNPC = getNPCAtPosition(e.clientX, e.clientY)
@@ -414,6 +418,7 @@ export default function InteractiveMap({ gameId, isMaster, myCharacter }: Intera
         }
       }
       setDraggingNPC(null)
+      setClickStartPos(null)
       return
     }
 
@@ -448,7 +453,25 @@ export default function InteractiveMap({ gameId, isMaster, myCharacter }: Intera
         }
       }
       setDraggingPlayer(null)
+      setClickStartPos(null)
+      return
     }
+
+    // Se não houve drag, verificar se foi um clique simples (não mestre com NPC selecionado)
+    if (clickStartPos && !isMaster) {
+      const moveDistance = Math.sqrt(
+        Math.pow(e.clientX - clickStartPos.x, 2) + 
+        Math.pow(e.clientY - clickStartPos.y, 2)
+      )
+      
+      // Se o movimento foi menor que 5 pixels, considerar como clique simples
+      if (moveDistance < 5) {
+        console.log('🖱️ Clique simples detectado, posicionando player...')
+        await handleCanvasClick(e)
+      }
+    }
+    
+    setClickStartPos(null)
   }
 
   const drawMap = useCallback(() => {
@@ -672,8 +695,8 @@ export default function InteractiveMap({ gameId, isMaster, myCharacter }: Intera
       return
     }
     
-    // Se não tiver personagem, não pode posicionar
-    if (!myCharacter) return
+    // Players podem posicionar mesmo sem personagem selecionado
+    // A verificação de myCharacter foi removida para permitir posicionamento
 
     const canvas = canvasRef.current
     if (!canvas) return
@@ -750,29 +773,46 @@ export default function InteractiveMap({ gameId, isMaster, myCharacter }: Intera
     if (gridX < 0 || gridY < 0) return
 
     try {
-      // Atualizar posição no banco
-      const currentPlayer = players.find(p => p.user_id === user.id)
-      if (currentPlayer) {
-        await updatePlayerPosition(gameId, user.id, gridX, gridY)
-
-        // Publicar no Ably para sincronização em tempo real
-        const channel = getAblyChannel(`game:${gameId}:map`)
-        if (channel) {
-          channel.publish('player_moved', {
-            playerId: currentPlayer.id,
-            x: gridX,
-            y: gridY,
-          })
-        }
-
-        // Atualizar localmente
-        setPlayers(prev => prev.map(p => 
-          p.user_id === user.id ? { ...p, position_x: gridX, position_y: gridY } : p
-        ))
+      // Buscar o player atual na lista
+      let currentPlayer = players.find(p => p.user_id === user.id)
+      
+      // Se não encontrou, recarregar a lista de players (pode ter acabado de entrar no jogo)
+      if (!currentPlayer) {
+        console.log('🔄 Player não encontrado na lista, recarregando players...')
+        await loadPlayers()
+        currentPlayer = players.find(p => p.user_id === user.id)
       }
+      
+      if (!currentPlayer) {
+        console.error('❌ Player não encontrado no jogo. Você precisa entrar no jogo primeiro.')
+        alert('Você precisa entrar no jogo antes de posicionar seu personagem.')
+        return
+      }
+
+      console.log('📍 Posicionando player:', { userId: user.id, playerId: currentPlayer.id, gridX, gridY })
+      
+      await updatePlayerPosition(gameId, user.id, gridX, gridY)
+
+      // Publicar no Ably para sincronização em tempo real
+      const channel = getAblyChannel(`game:${gameId}:map`)
+      if (channel) {
+        channel.publish('player_moved', {
+          playerId: currentPlayer.id,
+          x: gridX,
+          y: gridY,
+        })
+        console.log('📡 Evento player_moved publicado no Ably')
+      }
+
+      // Atualizar localmente
+      setPlayers(prev => prev.map(p => 
+        p.user_id === user.id ? { ...p, position_x: gridX, position_y: gridY } : p
+      ))
+      
+      console.log('✅ Posição atualizada com sucesso')
     } catch (err) {
-      console.error('Erro ao atualizar posição:', err)
-      alert('Erro ao mover personagem')
+      console.error('❌ Erro ao atualizar posição:', err)
+      alert('Erro ao mover personagem. Verifique o console para mais detalhes.')
     }
   }
 
@@ -815,6 +855,12 @@ export default function InteractiveMap({ gameId, isMaster, myCharacter }: Intera
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
+          onClick={async (e) => {
+            // Se não houve drag e não é mestre com NPC selecionado, tratar como clique para posicionar
+            if (!draggingNPC && !draggingPlayer && !isMaster) {
+              await handleCanvasClick(e)
+            }
+          }}
           className={(draggingNPC || draggingPlayer) ? 'cursor-grabbing w-full h-full' : 'cursor-crosshair w-full h-full'}
         />
       </div>
